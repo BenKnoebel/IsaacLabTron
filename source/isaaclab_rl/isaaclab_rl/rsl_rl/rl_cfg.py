@@ -174,7 +174,7 @@ class RslRlOnPolicyRunnerCfg:
     ``{time-stamp}_{run_name}``.
     """
 
-    logger: Literal["tensorboard", "neptune", "wandb"] = "tensorboard"
+    logger: Literal["tensorboard", "neptune", "wandb"] = "wandb"
     """The logger to use. Default is tensorboard."""
 
     neptune_project: str = "isaaclab"

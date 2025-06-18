@@ -272,6 +272,18 @@ class TerminationsCfg:
         func=mdp.illegal_contact,
         params={"sensor_cfg": SceneEntityCfg("contact_forces", body_names="base"), "threshold": 1.0},
     )
+    root_height_below_minimum = DoneTerm(
+        func=mdp.root_height_below_minimum,
+        params={"asset_cfg": SceneEntityCfg("robot"), "minimum_height": 0.4},
+    )
+    # roll_threshold = DoneTerm(
+    #     func=mdp.bad_orientation,
+    #     params={"asset_cfg": SceneEntityCfg("robot"), "axis": 0, "limit_angle": 0.8 },
+    # )
+    # pitch_threshold = DoneTerm(
+    #     func=mdp.bad_orientation,
+    #     params={"asset_cfg": SceneEntityCfg("robot"), "axis": 1, "limit_angle": 0.8 },
+    # )
 
 
 @configclass

@@ -14,6 +14,8 @@ from __future__ import annotations
 import torch
 from typing import TYPE_CHECKING
 
+from isaaclab.utils.math import euler_xyz_from_quat, wrap_to_pi
+
 from isaaclab.assets import Articulation, RigidObject
 from isaaclab.managers import SceneEntityCfg
 from isaaclab.sensors import ContactSensor
@@ -48,15 +50,17 @@ Root terminations.
 
 
 def bad_orientation(
-    env: ManagerBasedRLEnv, limit_angle: float, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")
+    env: ManagerBasedRLEnv, limit_angle: float, axis: int = 0, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")
 ) -> torch.Tensor:
     """Terminate when the asset's orientation is too far from the desired orientation limits.
 
-    This is computed by checking the angle between the projected gravity vector and the z-axis.
+    This is computed by checking the angle between the projected gravity vector and the provided axis.
     """
     # extract the used quantities (to enable type-hinting)
     asset: RigidObject = env.scene[asset_cfg.name]
-    return torch.acos(-asset.data.projected_gravity_b[:, 2]).abs() > limit_angle
+    orientation = wrap_to_pi(euler_xyz_from_quat(asset.data.root_quat_w)[axis])
+
+    return orientation.abs() > limit_angle
 
 
 def root_height_below_minimum(

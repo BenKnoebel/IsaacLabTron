@@ -1,3 +1,40 @@
+This is a Fork of Shafeef Omar's help for the Dodo Alive! Team 6 - Tron Locomotion, which I was part of.
+The idea was to use an existing IsaacLab template of the locomotion task from rls_rl and translate it to the robot we aimed to manipulate, the Tron1 by LimX Dynamics. We aproached this by first converting the URDF of the Tron1 robot to USD, the fileformat IsaacSim uses. (This can be found at assets/robots/tron/tron.usd)
+Next, we dublicated the template of the G1 Robot of Unitree and changed all joint names with the correct Tron labeling and thus created a seperate template, which can be found under /source/isaaclab_tasks/isaaclab_tasks/manager_based/locomotion/velocity/config/tron
+We now implemented some changes to the rough_env_cfg.py and flat_env_cfg.py which serve as the training environments. Especially important was to add a earlier termination root_hight_below_minimum in the more general velocity_env_cfg.py in order to terminate each learning attempt earlier and thus increase learning speed. 
+Furthermore, we added the task "Isaac-Velocity-Flat-Tron-v0" for training
+
+
+## Results: 
+
+Using the train.py script at scripts/reinforcement_learning/rsl_rl with the following command:
+``
+
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Velocity-Flat-Tron-v0 --num_envs 4096 --log_project_name TronFlat  --headless
+
+``
+
+, so in headless mode with 4096 parallel instances, we managed to get very decent results after 1500 iterations. The robot follows the velocity commands very accuratly, although it hops quite unnormally. This would point to the fact that we found a local minimum in the solution space and need to tune rewards much more in order to get a real "walk" solution. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ![Isaac Lab](docs/source/_static/isaaclab.jpg)
 
 ---

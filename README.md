@@ -1,6 +1,10 @@
-This is a Fork of Shafeef Omar's help for the Dodo Alive! Team 6 - Tron Locomotion, which I was part of.
+## Dodo Alive! Team 6: Tron Locomotion
+This work was created during the course phase of "Dodo Alive!", a Master-Lab @ Technical University of Munich with the goal to explore the locomootion of the Tron1 robot by LimX Dynamics. They already provide a locomotion policy with their device but it was trained on IsaacGym. We wanted to translate their work into IsaacLab and train our own policy
+
 The idea was to use an existing IsaacLab template of the locomotion task from rls_rl and translate it to the robot we aimed to manipulate, the Tron1 by LimX Dynamics. We aproached this by first converting the URDF of the Tron1 robot to USD, the fileformat IsaacSim uses. (This can be found at assets/robots/tron/tron.usd)
+
 Next, we dublicated the template of the G1 Robot of Unitree and changed all joint names with the correct Tron labeling and thus created a seperate template, which can be found under /source/isaaclab_tasks/isaaclab_tasks/manager_based/locomotion/velocity/config/tron
+
 We now implemented some changes to the rough_env_cfg.py and flat_env_cfg.py which serve as the training environments. Especially important was to add a earlier termination root_hight_below_minimum in the more general velocity_env_cfg.py in order to terminate each learning attempt earlier and thus increase learning speed. 
 Furthermore, we added the task "Isaac-Velocity-Flat-Tron-v0" for training
 
@@ -16,6 +20,8 @@ Using the train.py script at scripts/reinforcement_learning/rsl_rl with the foll
 
 , so in headless mode with 4096 parallel instances, we managed to get very decent results after 1500 iterations. The robot follows the velocity commands very accuratly, although it hops quite unnormally. This would point to the fact that we found a local minimum in the solution space and need to tune rewards much more in order to get a real "walk" solution. 
 
+
+This is a Fork of Shafeef Omar's help for the Dodo Alive! Team 6 - Tron Locomotion, which I was part of.
 
 
 
